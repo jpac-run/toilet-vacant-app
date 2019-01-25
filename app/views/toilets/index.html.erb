@@ -1,0 +1,15 @@
+<div class="container">
+  <ul>
+    <% @toilets.each do |toilet| %>
+    <li>
+      <span>Toilet number: <%= toilet.toilet_number %></span>
+        <% if toilet.open %>
+          <%= link_to  "Get In!", get_in_toilet_path(id: toilet.id), method: :patch %>
+        <% else %>
+          <span>Someone is doing poop</span>
+          <%= link_to  "Finish Poop", get_out_toilet_path(id: toilet.id), method: :patch %>
+        <% end %>
+      <% end %>
+    </li>
+  </ul>
+</div>
