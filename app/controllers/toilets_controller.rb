@@ -3,21 +3,19 @@ class ToiletsController < ApplicationController
     @toilets = Toilet.all
   end
 
-  def get_in
+  def update
     toilet = Toilet.find(params[:id])
-    toilet.open = false
-    if toilet.save
-      ActiveSupport::Notifications.instrument "occupied.toilet"
-      redirect_to root_path
-    end
+    toilet.open = !toilet.open
+    
+    toilet.save
+    
+    ActiveSupport::Notifications.instrument(select_event(toilet))
+    redirect_to root_path
   end
 
-  def get_out
-    toilet = Toilet.find(params[:id])
-    toilet.open = true
-    if toilet.save
-      ActiveSupport::Notifications.instrument "vacant.toilet"
-      redirect_to root_path
-    end
+  private
+
+  def select_event(toilet)
+    toilet.open ? "vacant.toilet" : "occupied.toilet"
   end
 end

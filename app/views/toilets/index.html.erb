@@ -4,10 +4,10 @@
     <li>
       <span>Toilet number: <%= toilet.toilet_number %></span>
       <% if toilet.open %>
-        <%= link_to  "Get In!", get_in_toilet_path(id: toilet.id), method: :patch %>
+        <%= link_to  "Get In!", toilet_path(id: toilet.id), method: :patch %>
       <% else %>
         <span>Someone is doing poop</span>
-        <%= link_to  "Finish Poop", get_out_toilet_path(id: toilet.id), method: :patch %>
+        <%= link_to  "Finish Poop", toilet_path(id: toilet.id), method: :patch %>
       <% end %>
     </li>
     <% end %>
